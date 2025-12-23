@@ -38,9 +38,12 @@ export default function ContestantDetailsSection({
       for (let i = currentContestants.length; i < count; i++) {
         newContestants.push({
           name: "",
+          dob: undefined as any,
           gender: "",
           subject: "",
           passportNumber: "",
+          passportExpiry: undefined as any,
+          tshirtSize: "",
           specialRequirements: "",
         })
       }

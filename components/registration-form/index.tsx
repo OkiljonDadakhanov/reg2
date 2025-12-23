@@ -29,9 +29,12 @@ export default function RegistrationForm() {
       contestants: [
         {
           name: "",
+          dob: undefined as any,
           gender: "",
           subject: "",
           passportNumber: "",
+          passportExpiry: undefined as any,
+          tshirtSize: "",
           specialRequirements: "",
         },
       ],
