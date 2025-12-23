@@ -24,13 +24,11 @@ export const formSchema = z.object({
   accompanyingPersons: z.string().min(1, "Number of persons is required"),
   contestantsCount: z.string().min(1, "Number of contestants is required"),
   contestants: z.array(contestantSchema),
-  confirmAccuracy: z.literal(true, {
-    errorMap: () => ({
-      message: "You must confirm the information is accurate",
-    }),
+  confirmAccuracy: z.boolean().refine((val) => val === true, {
+    message: "You must confirm the information is accurate",
   }),
-  agreeToRules: z.literal(true, {
-    errorMap: () => ({ message: "You must agree to the rules" }),
+  agreeToRules: z.boolean().refine((val) => val === true, {
+    message: "You must agree to the rules",
   }),
 })
 
