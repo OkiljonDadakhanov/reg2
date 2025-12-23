@@ -45,7 +45,7 @@ export function GeneralInformationSection({
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {countries.map((country) => (
+                  {Array.isArray(countries) && countries.map((country) => (
                     <SelectItem key={country.id} value={country.id.toString()}>
                       {country.name}
                     </SelectItem>

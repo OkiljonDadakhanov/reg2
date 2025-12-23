@@ -12,7 +12,37 @@ export async function fetchCountries(): Promise<Country[]> {
     const { data } = await axios.get(
       "https://api.olympcenter.uz/api/countries"
     );
-    return data;
+    // Handle paginated response format: { count, next, previous, results: [...] }
+    if (data && typeof data === 'object') {
+      if (Array.isArray(data.results)) {
+        let allCountries = [...data.results];
+        // Fetch remaining pages if there are more
+        let nextUrl = data.next;
+        while (nextUrl) {
+          const { data: nextData } = await axios.get(nextUrl);
+          if (Array.isArray(nextData.results)) {
+            allCountries = [...allCountries, ...nextData.results];
+            nextUrl = nextData.next;
+          } else {
+            break;
+          }
+        }
+        return allCountries;
+      }
+      // Fallback: check if data is directly an array
+      if (Array.isArray(data)) {
+        return data;
+      }
+      // Handle other nested formats
+      if (Array.isArray(data.data)) {
+        return data.data;
+      }
+      if (Array.isArray(data.countries)) {
+        return data.countries;
+      }
+    }
+    console.warn("Unexpected API response format:", data);
+    return [];
   } catch (error) {
     console.error("Error fetching countries:", error);
     return [];
